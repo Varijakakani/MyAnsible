@@ -1,0 +1,28 @@
+---
+- hosts: mywebservers
+  become: yes
+  gather_facts: yes
+  tasks:
+  - name: i want to install webserver on ubuntu
+    apt:
+     name: "{{mywebpackforubuntu}}"
+     state: present
+    when: ansible_os_family =="Debian"
+
+  - name: i want start webserver on ubuntu
+    service:
+      name: "{{mywebpackforubuntu}}"
+      state: started
+    when: ansible_os_family =="Debian"
+
+  - name: i want to install webserver in RedHat
+    yum:
+      name: "{{mywebpackforredhat}}"
+      state: present
+    when: ansible_os_family =="RedHat"
+  
+  - name: i want to start webserver on RedHat
+    service:
+      name: "{{mywebpackforredhat}}"
+      state: started
+    when: ansible_os_family =="RedHat"
